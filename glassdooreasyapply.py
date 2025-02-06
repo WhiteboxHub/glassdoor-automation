@@ -1,15 +1,124 @@
-import time, random, csv, pyautogui, pdb, traceback, sys
-from selenium.common.exceptions import TimeoutException
+# import time, random, csv, pyautogui, pdb, traceback, sys
+# from selenium.common.exceptions import TimeoutException
+# from selenium.webdriver.common.keys import Keys
+# from selenium.webdriver.common.by import By
+# # i added below two lines 
+# from selenium.webdriver.support.ui import WebDriverWait
+# from selenium.webdriver.support import expected_conditions as EC
+# from selenium.webdriver.support.ui import Select
+# from selenium.webdriver.common.action_chains import ActionChains
+# from datetime import date
+# from itertools import product
+
+
+# class GlassDoorEasyApply:
+#     def __init__(self, parameters, driver):
+#         self.browser = driver
+#         self.email = parameters['email']
+#         self.password = parameters['password']
+#         self.disable_lock = parameters['disableAntiLock']
+#         self.company_blacklist = parameters.get('companyBlacklist', []) or []
+#         self.title_blacklist = parameters.get('titleBlacklist', []) or []
+#         self.positions = parameters.get('positions', [])
+#         self.locations = parameters.get('locations', [])
+#         self.base_search_url = self.get_base_search_url(parameters)
+#         self.seen_jobs = []
+#         self.file_name = "output"
+#         self.output_file_directory = parameters['outputFileDirectory']
+#         self.resume_dir = parameters['uploads']['resume']
+#         self.photo_dir = parameters['uploads']['photo']
+#         if 'coverLetter' in parameters['uploads']:
+#             self.cover_letter_dir = parameters['uploads'].get['coverLetter']
+#         else:
+#             self.cover_letter_dir = ''
+#         self.checkboxes = parameters.get('checkboxes', [])
+#         self.university_gpa = parameters['universityGpa']
+#         self.languages = parameters.get('languages', [])
+#         self.industry = parameters.get('industry', [])
+#         self.technology = parameters.get('technology', [])
+#         self.personal_info = parameters.get('personalInfo', [])
+#         self.eeo = parameters.get('eeo', [])
+#         self.technology_default = self.technology['default']
+#         self.industry_default = self.industry['default'] 
+
+
+#     # def login(self):
+#     #     try: 
+            
+#     #         self.browser.get("https://www.glassdoor.com/index.htm")
+#     #         time.sleep(random.uniform(1, 5))
+#     #         # self.browser.find_element(By.CSS_SELECTOR,'#SiteNav > nav > div.d-none.d-md-block.LockedHomeHeaderStyles__bottomBorder > div > div > div > button').click()
+#     #         self.browser.find_element(By.CSS_SELECTOR, 'button[data-test="site-header-sign-in"]').click()
+#     #         self.browser.find_element_by_id("modalUserEmail").send_keys(self.email)
+#     #         self.browser.find_element_by_id("modalUserPassword").send_keys(self.password)
+#     #         # self.browser.find_element(By.CSS_SELECTOR,"#LoginModal > div > div > div.modal_main.actionBarMt0 > div.fullContent > div.modal_content > div > div > form > div.d-flex.align-items-center.flex-column > button > span").click()
+#     #         self.browser.find_element(By.CSS_SELECTOR, 'button[data-test="sign-in-submit"]').click()
+#     #         time.sleep(random.uniform(1, 5))
+#     #     except TimeoutException:
+#     #         raise Exception("Could not login!")
+        
+
+#     # def security_check(self):
+#     #     current_url = self.browser.current_url
+#     #     page_source = self.browser.page_source
+
+#     #     if '/checkpoint/challenge/' in current_url or 'security check' in page_source:
+#     #         input("Please complete the security check and press enter in this console when it is done.")
+#     #         time.sleep(random.uniform(5.5, 10.5))
+
+
+#     def login(self):
+#         wait = WebDriverWait(self.browser, 20)  # Increased wait time for loading elements
+#         try: 
+#             self.browser.get("https://www.glassdoor.com/index.htm")  # Open Glassdoor homepage
+#             time.sleep(random.uniform(2, 5))  # Random delay to avoid detection
+
+#             # Step 1: Click the login button
+#             login_button = wait.until(EC.element_to_be_clickable((By.XPATH, "//button[@aria-label='sign in']")))
+#             login_button.click()
+#             print("Login button clicked.")
+
+#             # Step 2: Fill in the email
+#             email_input = wait.until(EC.presence_of_element_located((By.ID, "modalUserEmail")))
+#             email_input.send_keys(self.email)
+#             print("Email entered.")
+
+#             # Step 3: Click "Continue with email" button using JavaScript
+#             wait = WebDriverWait(driver, 10)  # Adjust timeout as needed
+#             continue_button = wait.until(EC.element_to_be_clickable(
+#             (By.CSS_SELECTOR, "#InlineLoginModule > div > div.view-container.inlineInnerContainer.mx-auto.my-0 > div > div > div > div > form > div.emailButton > div > button")
+#           ))
+#             driver.execute_script("arguments[0].scrollIntoView();", continue_button)
+#             ActionChains(driver).move_to_element(continue_button).click().perform()
+#             print("Clicked 'Continue with Email' button successfully.")
+
+#             time.sleep(random.uniform(2, 4))  # Wait for the next page or form to load
+
+#             # Step 4: Fill in the password
+#             password_input = wait.until(EC.presence_of_element_located((By.ID, "modalUserPassword")))
+#             password_input.send_keys(self.password)
+#             print("Password entered.")
+
+#             # Optionally, you can click a submit button here if there's one for password
+#             # submit_button = wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, 'button[data-test="sign-in-submit"]')))
+#             # submit_button.click()
+#             # print("Password submitted.")
+
+#             time.sleep(random.uniform(3, 6))  # Wait for login to complete
+
+#         except Exception as e:
+#             print("Error during login:", e)
+
+
+import time
+import random
+from selenium import webdriver
+from selenium.common.exceptions import TimeoutException, NoSuchElementException
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
-# i added below two lines 
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.support.ui import Select
 from selenium.webdriver.common.action_chains import ActionChains
-from datetime import date
-from itertools import product
-
 
 class GlassDoorEasyApply:
     def __init__(self, parameters, driver):
@@ -27,10 +136,7 @@ class GlassDoorEasyApply:
         self.output_file_directory = parameters['outputFileDirectory']
         self.resume_dir = parameters['uploads']['resume']
         self.photo_dir = parameters['uploads']['photo']
-        if 'coverLetter' in parameters['uploads']:
-            self.cover_letter_dir = parameters['uploads'].get['coverLetter']
-        else:
-            self.cover_letter_dir = ''
+        self.cover_letter_dir = parameters['uploads'].get('coverLetter', '')
         self.checkboxes = parameters.get('checkboxes', [])
         self.university_gpa = parameters['universityGpa']
         self.languages = parameters.get('languages', [])
@@ -38,33 +144,431 @@ class GlassDoorEasyApply:
         self.technology = parameters.get('technology', [])
         self.personal_info = parameters.get('personalInfo', [])
         self.eeo = parameters.get('eeo', [])
-        self.technology_default = self.technology['default']
-        self.industry_default = self.industry['default'] 
+        self.technology_default = self.technology.get('default', '')
+        self.industry_default = self.industry.get('default', '')
 
+    def get_base_search_url(self, parameters):
+        # Construct the base search URL based on parameters
+        base_url = "https://www.glassdoor.com/Job/jobs.htm"
+        query_params = []
+        if self.positions:
+            query_params.append(f"keyword={'%20'.join(self.positions)}")
+        if self.locations:
+            query_params.append(f"locId={self.locations[0]}")
+        if query_params:
+            base_url += "?" + "&".join(query_params)
+        return base_url
+
+    # def login(self):
+    #     wait = WebDriverWait(self.browser, 20)
+    #     try:
+    #         self.browser.get("https://www.glassdoor.com/index.htm")
+    #         time.sleep(random.uniform(2, 5))
+
+    #         # Step 1: Click the login button
+    #         login_button = wait.until(EC.element_to_be_clickable((By.XPATH, "//button[@aria-label='sign in']")))
+    #         login_button.click()
+    #         print("Login button clicked.")
+
+    #         # Step 2: Fill in the email
+    #         email_input = wait.until(EC.presence_of_element_located((By.ID, "modalUserEmail")))
+    #         email_input.send_keys(self.email)
+    #         print("Email entered.")
+
+    #         # Step 3: Click "Continue with email" button
+    #         continue_button = wait.until(EC.element_to_be_clickable(
+    #             (By.CSS_SELECTOR, "#InlineLoginModule > div > div.view-container.inlineInnerContainer.mx-auto.my-0 > div > div > div > div > form > div.emailButton > div > button")
+    #         ))
+    #         self.browser.execute_script("arguments[0].scrollIntoView();", continue_button)
+    #         ActionChains(self.browser).move_to_element(continue_button).click().perform()
+    #         print("Clicked 'Continue with Email' button successfully.")
+
+    #         time.sleep(random.uniform(2, 4))
+
+    #         # Step 4: Fill in the password
+    #         password_input = wait.until(EC.presence_of_element_located((By.ID, "modalUserPassword")))
+    #         password_input.send_keys(self.password)
+    #         print("Password entered.")
+
+    #         # Step 5: Click the sign-in button
+    #         sign_in_button = wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, 'button[data-test="sign-in-submit"]')))
+    #         sign_in_button.click()
+    #         print("Password submitted.")
+
+    #         time.sleep(random.uniform(3, 6))
+
+    #     except TimeoutException:
+    #         print("TimeoutException: Element not found within the wait time.")
+    #     except NoSuchElementException:
+    #         print("NoSuchElementException: Element not found on the page.")
+    #     except Exception as e:
+    #         print("Error during login:", e)
+
+
+    
+    # def login(self):
+    #     wait = WebDriverWait(self.browser, 20)
+    #     try:
+    #         self.browser.get("https://www.glassdoor.com/index.htm")
+    #         time.sleep(random.uniform(2, 4))
+
+    #         # Step 1: Click the login button
+    #         login_button = wait.until(EC.element_to_be_clickable((By.XPATH, "//button[@aria-label='sign in']")))
+    #         login_button.click()
+    #         print("✅ Login button clicked.")
+
+    #         # Step 2: Fill in the email
+    #         email_input = wait.until(EC.presence_of_element_located((By.ID, "modalUserEmail")))
+    #         email_input.send_keys(self.email)
+    #         print("✅ Email entered.")
+
+    #         # Step 3: Click "Continue with Email" button
+    #         try:
+    #             continue_button = wait.until(EC.element_to_be_clickable(
+    #                 (By.CSS_SELECTOR, "button[data-test='email-form-button']")
+    #             ))
+    #             self.browser.execute_script("arguments[0].scrollIntoView();", continue_button)
+
+    #             # Attempt to click using ActionChains
+    #             ActionChains(self.browser).move_to_element(continue_button).click().perform()
+    #             print("✅ Clicked 'Continue with Email' button using ActionChains.")
+
+    #             # Alternative: Click using JavaScript if ActionChains fails
+    #             if "Continue with email" in continue_button.text:
+    #                 self.browser.execute_script("arguments[0].click();", continue_button)
+    #                 print("✅ Clicked 'Continue with Email' button using JavaScript.")
+
+    #         except TimeoutException:
+    #             print("❌ 'Continue with Email' button not found! Exiting...")
+    #             return
+
+    #         # Step 4: Wait for the password field OR check if modal disappears
+    #         time.sleep(2)
+    #         try:
+    #             password_input = WebDriverWait(self.browser, 10).until(
+    #                 EC.presence_of_element_located((By.ID, "modalUserPassword"))
+    #             )
+    #             print("✅ Password input field found.")
+    #         except TimeoutException:
+    #             print("⚠ Login modal disappeared. Checking for CAPTCHA or redirection...")
+
+    #             # Check if redirected to a new page (e.g., Glassdoor homepage)
+    #             current_url = self.browser.current_url
+    #             if "glassdoor.com" in current_url and "index.htm" not in current_url:
+    #                 print("🔄 Redirected! Trying login again...")
+    #                 self.login()  # Retry login
+    #                 return
+
+    #         # Step 5: CAPTCHA Handling
+    #         if self.is_captcha_present():
+    #             print("⚠ CAPTCHA detected! Solve it manually.")
+    #             input("🔹 Press Enter after solving the CAPTCHA...")
+
+    #         # Step 6: Enter password if the modal didn't disappear
+    #         try:
+    #             password_input.send_keys(self.password)
+    #             print("✅ Password entered.")
+
+    #             # Step 7: Click sign-in button
+    #             sign_in_button = wait.until(EC.element_to_be_clickable((By.XPATH, "//button[@data-test='sign-in-submit']")))
+    #             sign_in_button.click()
+    #             print("✅ Password submitted.")
+    #         except Exception:
+    #             print("⚠ Password field not found, login failed.")
+
+    #         time.sleep(random.uniform(3, 6))
+
+    #     except TimeoutException:
+    #         print("❌ TimeoutException: Element not found within the wait time.")
+    #     except NoSuchElementException:
+    #         print("❌ NoSuchElementException: Element not found on the page.")
+    #     except Exception as e:
+    #         print("❌ Error during login:", e)
+
+    # def is_captcha_present(self):
+    #     """Check if CAPTCHA is present on the page."""
+    #     try:
+    #         wait = WebDriverWait(self.browser, 5)
+    #         captcha_box = wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, 'iframe[title="recaptcha challenge"]')))
+    #         return True
+    #     except:
+    #         return False
+
+
+    # def login(self):
+    #     wait = WebDriverWait(self.browser, 20)
+    #     try:
+    #         self.browser.get("https://www.glassdoor.com/index.htm")
+    #         time.sleep(random.uniform(2, 4))
+
+    #         # Step 1: Locate and fill in the email field
+    #         email_input = wait.until(EC.presence_of_element_located((By.ID, "inlineUserEmail")))
+    #         email_input.clear()  # Clear any pre-existing text
+    #         email_input.send_keys(self.email)
+    #         print("✅ Email entered.")
+
+    #         # Step 2: Click 'Continue with Email' button
+    #         continue_button = wait.until(EC.element_to_be_clickable(
+    #             (By.CSS_SELECTOR, "button[data-test='email-form-button']")))
+    #         self.browser.execute_script("arguments[0].scrollIntoView();", continue_button)
+    #         ActionChains(self.browser).move_to_element(continue_button).click().perform()
+    #         print("✅ 'Continue with Email' button clicked.")
+
+    #         # Wait a little to see if modal closes or next step happens
+    #         time.sleep(random.uniform(2, 4))
+
+    #     except TimeoutException:
+    #         print("❌ TimeoutException: Element not found within the wait time.")
+    #     except NoSuchElementException:
+    #         print("❌ NoSuchElementException: Element not found on the page.")
+    #     except Exception as e:
+    #         print("❌ Error during login:", e)
 
     def login(self):
-        try: 
-            
+        wait = WebDriverWait(self.browser, 20)
+        try:
             self.browser.get("https://www.glassdoor.com/index.htm")
-            time.sleep(random.uniform(1, 5))
-            # self.browser.find_element(By.CSS_SELECTOR,'#SiteNav > nav > div.d-none.d-md-block.LockedHomeHeaderStyles__bottomBorder > div > div > div > button').click()
-            self.browser.find_element(By.CSS_SELECTOR, 'button[data-test="site-header-sign-in"]').click()
-            self.browser.find_element_by_id("modalUserEmail").send_keys(self.email)
-            self.browser.find_element_by_id("modalUserPassword").send_keys(self.password)
-            # self.browser.find_element(By.CSS_SELECTOR,"#LoginModal > div > div > div.modal_main.actionBarMt0 > div.fullContent > div.modal_content > div > div > form > div.d-flex.align-items-center.flex-column > button > span").click()
-            self.browser.find_element(By.CSS_SELECTOR, 'button[data-test="sign-in-submit"]').click()
-            time.sleep(random.uniform(1, 5))
+            time.sleep(random.uniform(2, 4))
+
+            # Step 1: Locate and fill in the email field
+            email_input = wait.until(EC.presence_of_element_located((By.ID, "inlineUserEmail")))
+            email_input.clear()  # Clear any pre-existing text
+            email_input.send_keys(self.email)
+            print("✅ Email entered.")
+
+            # Step 2: Click 'Continue with Email' button
+            continue_button = wait.until(EC.element_to_be_clickable(
+                (By.CSS_SELECTOR, "button[data-test='email-form-button']")))
+            self.browser.execute_script("arguments[0].scrollIntoView();", continue_button)
+            ActionChains(self.browser).move_to_element(continue_button).click().perform()
+            print("✅ 'Continue with Email' button clicked.")
+
+            # Step 3: Locate and fill in the password field
+            password_input = wait.until(EC.presence_of_element_located((By.ID, "inlineUserPassword")))
+            password_input.clear()  # Clear any pre-existing text
+            password_input.send_keys(self.password)  # Make sure self.password is set to your actual password
+            print("✅ Password entered.")
+
+            # # Step 4: Click 'Sign In' button
+            # sign_in_button = wait.until(EC.element_to_be_clickable(
+            #     (By.XPATH, "//button[@data-role-variant='primary']")))
+            # self.browser.execute_script("arguments[0].scrollIntoView();", sign_in_button)
+            # ActionChains(self.browser).move_to_element(sign_in_button).click().perform()
+            # print("✅ 'Sign In' button clicked.")
+
+            # Step 4: Locate the **correct** Sign In button using XPath
+            sign_in_button = wait.until(EC.element_to_be_clickable(
+                 (By.XPATH, "//button[@class='Button Button' and contains(., 'Sign in')]")))
+            self.browser.execute_script("arguments[0].scrollIntoView();", sign_in_button)
+            ActionChains(self.browser).move_to_element(sign_in_button).click().perform()
+            print("✅ Correct 'Sign In' button clicked.")
+
+            # # Step 5: Wait for the Glassdoor homepage to load
+            time.sleep(random.uniform(5, 7))
+
+            # Step 6: Locate and click the "Jobs" button
+            jobs_button = wait.until(EC.element_to_be_clickable(
+                (By.XPATH, "//a[@href='/Job/index.htm']")))  # XPath for "Jobs" link
+            self.browser.execute_script("arguments[0].scrollIntoView();", jobs_button)
+            ActionChains(self.browser).move_to_element(jobs_button).click().perform()
+            print("✅ 'Jobs' button clicked. Navigating to the job search page.")
+
+
+            # Wait a little to see if login proceeds
+            time.sleep(random.uniform(2, 4))
+
         except TimeoutException:
-            raise Exception("Could not login!")
+            print("❌ TimeoutException: Element not found within the wait time.")
+        except NoSuchElementException:
+            print("❌ NoSuchElementException: Element not found on the page.")
+        except Exception as e:
+            print("❌ Error during login:", e)
+
+    # def search_job(self):
+    #     wait = WebDriverWait(self.browser, 20)
+    #     try:
+    #         # Wait for the job search page to load (after clicking the "Jobs" button)
+    #         time.sleep(random.uniform(3, 5))
+
+    #         # Step 1: Locate the "Find your perfect job" input field
+    #         job_input_field = wait.until(EC.presence_of_element_located(
+    #             (By.XPATH, "//input[@placeholder='Find your perfect job']")))  # Use the placeholder text
+    #         job_input_field.click()
+    #         print("✅ 'Find your perfect job' input field clicked.")
+
+    #         # Step 2: Optionally, type a job title into the input field (e.g., "Software Engineer")
+    #         job_input_field.send_keys("Software Engineer")
+    #         print("✅ Job title entered: 'Software Engineer'.")
+
+    #         # Step 4: Locate the "Location" input field
+    #         location_input_field = wait.until(EC.presence_of_element_located(
+    #         (By.XPATH, "//input[@placeholder='Location']")))
+    #         location_input_field.click()
+    #         print("✅ 'Location' input field clicked.")
+
+    #         # Step 5: Enter location
+    #         location_input_field.send_keys("New York")
+    #         print("✅ Location entered: 'New York'.")
+
+    #     except TimeoutException:
+    #         print("❌ TimeoutException: Element not found within the wait time.")
+    #     except NoSuchElementException:
+    #         print("❌ NoSuchElementException: Element not found on the page.")
+    #     except Exception as e:
+    #         print("❌ Error during job search:", e)
+
+    #         # Step 3: Optionally, submit the search (if there's a submit button) or let it auto-submit
+    #         # If there's a submit button to click (optional), you can uncomment the following lines:
+    #         # submit_button = wait.until(EC.element_to_be_clickable(
+    #         #     (By.XPATH, "//button[@type='submit']")))
+    #         # submit_button.click()
+    #         # print("✅ Search submitted.")
+
+    #         # If auto-submit works after typing, you can skip Step 3 and just proceed with the next steps.
+
+    #     except TimeoutException:
+    #         print("❌ TimeoutException: Element not found within the wait time.")
+    #     except NoSuchElementException:
+    #         print("❌ NoSuchElementException: Element not found on the page.")
+    #     except Exception as e:
+    #         print("❌ Error during job search:", e)
+    def search_job(self):
+        wait = WebDriverWait(self.browser, 20)
+        try:
+            # Step 1: Click on the "Jobs" button
+            jobs_button = wait.until(EC.element_to_be_clickable(
+                (By.XPATH, "//a[@href='/Job/index.htm']")))
+            jobs_button.click()
+            print("✅ Clicked on 'Jobs' button.")
+            time.sleep(3)  # Allow time for navigation
+
+            # Step 2: Locate the "Find your perfect job" input field
+            job_input_field = wait.until(EC.presence_of_element_located(
+                (By.XPATH, "//input[@placeholder='Find your perfect job']")))
+            job_input_field.click()
+            print("✅ 'Find your perfect job' input field clicked.")
+
+            # Step 3: Enter a job title
+            job_input_field.send_keys("Software Engineer")
+            print("✅ Job title entered: 'Software Engineer'.")
+
+            time.sleep(2)  # Wait before interacting with location field
+
+            # # Step 4: Locate the "Location" input field using JavaScript
+            # location_input_field = wait.until(EC.presence_of_element_located(
+            #     (By.XPATH, "//input[@placeholder='Location']")))
+            
+            # # Use JavaScript to bring the element into view & click
+            # self.browser.execute_script("arguments[0].scrollIntoView();", location_input_field)
+            # self.browser.execute_script("arguments[0].click();", location_input_field)
+            # print("✅ 'Location' input field clicked using JavaScript.")
+
+            # # # Step 5: Enter location
+            # # location_input_field.send_keys("New York")
+            # # print("✅ Location entered: 'New York'.")
+            
+            # # time.sleep(random.uniform(2, 4))
+
+            #  # 2. Enter the location
+            # location_input_field.send_keys("New York")
+            # time.sleep(1)  # Add a short wait
+
+            # # 3. Verify location entry by getting the value
+            # entered_location = location_input_field.get_attribute("value")
+            # print(f"✅ Entered location: {entered_location}")
+
+            # 2. Find and click the location input field
+            location_input = self.browser.find_element(By.ID, "searchBar-location")
+            location_input.click()  # Click to focus on location input
+            time.sleep(1)
+
+            # 3. Enter the location value
+            location_input.send_keys("New York")
+            time.sleep(1)
+
+            # 4. You can click the location input button (if required, like confirming the selection)
+            location_button = self.browser.find_element(By.ID, "searchBar-location")
+            location_button.click()  # Click to confirm the location
+            time.sleep(1)
+
+            # Verify the location entered
+            entered_location = location_input.get_attribute("value")
+            print(f"✅ Entered location: {entered_location}")
+
+            # Continue with other steps...
+        
+        except Exception as e:
+            print("❌ Error during job search:", e)
+
+            # Verify again after entering
+            time.sleep(1)
+            rechecked_location = location_input_field.get_attribute("value")
+            print(f"✅ Rechecked location: {rechecked_location}")
+
+        except TimeoutException:
+            print("❌ TimeoutException: Element not found within the wait time.")
+        except NoSuchElementException:
+            print("❌ NoSuchElementException: Element not found on the page.")
+        except Exception as e:
+            print("❌ Error during job search:", e)
+
+
 
     def security_check(self):
-        current_url = self.browser.current_url
-        page_source = self.browser.page_source
+        """Handles potential CAPTCHA or additional verification steps"""
+        try:
+            wait = WebDriverWait(self.browser, 5)
+            captcha_box = wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, 'iframe[title="recaptcha challenge"]')))
+            if captcha_box:
+                print("CAPTCHA detected. Please solve it manually.")
+                input("Press Enter after solving CAPTCHA...")
 
-        if '/checkpoint/challenge/' in current_url or 'security check' in page_source:
-            input("Please complete the security check and press enter in this console when it is done.")
-            time.sleep(random.uniform(5.5, 10.5))
+        except Exception:
+            print("No CAPTCHA detected. Continuing...")
 
+    def start_applying(self):
+        """Function placeholder for job application automation"""
+        print("Starting job application process... (To be implemented)")
+
+# Example usage
+if __name__ == "__main__":
+    parameters = {
+        'email': 'your_email@example.com',
+        'password': 'your_password',
+        'disableAntiLock': True,
+        'companyBlacklist': [],
+        'titleBlacklist': [],
+        'positions': ['Software Engineer'],
+        'locations': ['1147221'],  # Example location ID for San Francisco
+        'outputFileDirectory': '/path/to/output',
+        'uploads': {
+            'resume': '/path/to/resume.pdf',
+            'photo': '/path/to/photo.jpg',
+            'coverLetter': '/path/to/cover_letter.pdf'
+        },
+        'universityGpa': '3.5',
+        'languages': ['English', 'Spanish'],
+        'industry': {'default': 'Technology'},
+        'technology': {'default': 'Python'},
+        'personalInfo': {},
+        'eeo': {}
+    }
+
+    # Initialize the WebDriver (make sure to specify the correct path to chromedriver)
+    driver = webdriver.Chrome(executable_path='/path/to/chromedriver')
+
+    # Create an instance of GlassDoorEasyApply and log in
+    glassdoor_bot = GlassDoorEasyApply(parameters, driver)
+    glassdoor_bot.login()
+    glassdoor_bot.security_check()
+    glassdoor_bot.start_applying()
+
+    # Close the browser
+    driver.quit()
+
+
+
+# --------------------------------------------------------------------------------------------------
     def check_notif_modal(self):
         try:
             self.browser.find_element_by_class_name("modal_main")
