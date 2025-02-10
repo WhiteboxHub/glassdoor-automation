@@ -274,4 +274,13 @@ if __name__ == '__main__':
     bot.login()
     time.sleep(3)  # Ensure the page loads
     bot.search_job()
+    time.sleep(3)  # Ensure the page loads
+    bot.click_easy_apply_filter()
+    time.sleep(3)  # Ensure the page loads
+    bot.select_first_job()
+    time.sleep(3)  # Ensure the page loads
+    bot.easy_apply_job()
+    time.sleep(3)  # Ensure the page loads
+    bot.apply_to_jobs()
+    
     print("End")
