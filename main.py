@@ -264,23 +264,46 @@ def validate_yaml():
     return parameters
 
 
+# if __name__ == '__main__':
+#     parameters = validate_yaml()
+#     browser = init_browser()
+#     bot = GlassDoorEasyApply(parameters, browser)
+    
+#     print("Start")
+#     # print(dir(bot))
+#     bot.login()
+#     time.sleep(3)  # Ensure the page loads
+#     bot.search_job()
+#     time.sleep(3)  # Ensure the page loads
+#     bot.click_easy_apply_filter()
+#     time.sleep(3)  # Ensure the page loads
+#     bot.select_first_job()
+#     time.sleep(3)  # Ensure the page loads
+#     bot.easy_apply_job()
+#     time.sleep(3)  # Ensure the page loads
+#     bot.apply_to_jobs()
+
+#     print("End")
+
+
+
 if __name__ == '__main__':
-    parameters = validate_yaml()
-    browser = init_browser()
-    bot = GlassDoorEasyApply(parameters, browser)
-    
-    print("Start")
-    # print(dir(bot))
-    bot.login()
-    time.sleep(3)  # Ensure the page loads
-    bot.search_job()
-    time.sleep(3)  # Ensure the page loads
-    bot.click_easy_apply_filter()
-    time.sleep(3)  # Ensure the page loads
-    bot.select_first_job()
-    time.sleep(3)  # Ensure the page loads
-    bot.easy_apply_job()
-    time.sleep(3)  # Ensure the page loads
-    bot.apply_to_jobs()
-    
-    print("End")
+    try:
+        parameters = validate_yaml()
+        browser = init_browser()
+        bot = GlassDoorEasyApply(parameters, browser)
+        
+        print("🚀 Start")
+        bot.login()
+        time.sleep(3)  # Ensure the page loads
+
+        bot.apply_to_jobs()  # Single call handles everything
+        
+        print("✅ End")
+
+    except Exception as e:
+        print(f"❌ Error: {e}")
+
+    finally:
+        print("🛑 Closing browser...")
+        browser.quit()

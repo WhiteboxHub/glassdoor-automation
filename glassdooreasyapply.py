@@ -120,6 +120,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.action_chains import ActionChains
 
+
 class GlassDoorEasyApply:
     def __init__(self, parameters, driver):
         self.browser = driver
@@ -215,21 +216,214 @@ class GlassDoorEasyApply:
             print("❌ Error during login:", e)
 
    
+    # def search_job(self):
+    #     wait = WebDriverWait(self.browser, 20)
+    #     try:
+    #         # Step 1: Click on the "Jobs" button
+    #         jobs_button = wait.until(EC.element_to_be_clickable(
+    #             (By.XPATH, "//a[@href='/Job/index.htm']")))
+    #         jobs_button.click()
+    #         print("✅ Clicked on 'Jobs' button.")
+    #         time.sleep(3)  # Allow time for navigation
+
+    #         # Step 2: Locate and enter job title
+    #         job_input_field = wait.until(EC.presence_of_element_located(
+    #             (By.XPATH, "//input[@placeholder='Find your perfect job']")))
+    #         job_input_field.click()
+    #         print("✅ 'Find your perfect job' input field clicked.")
+    #         job_input_field.send_keys("Software Engineer")
+    #         print("✅ Job title entered: 'Software Engineer'.")
+    #         time.sleep(2)
+
+    #         # Step 3: Enter location and press Enter
+    #         location_input = wait.until(EC.element_to_be_clickable((By.ID, "searchBar-location")))
+    #         location_input.click()
+    #         time.sleep(1)
+    #         location_input.send_keys("New York")
+    #         time.sleep(1)
+    #         location_input.send_keys(Keys.RETURN)  # Press Enter to update results
+    #         time.sleep(3)  # Wait for the page to update
+
+    #         # Step 4: Re-locate the location input to avoid stale reference error
+    #         location_input = wait.until(EC.presence_of_element_located((By.ID, "searchBar-location")))
+    #         entered_location = location_input.get_attribute("value")
+    #         print(f"✅ Location confirmed: {entered_location}")
+
+    #     except TimeoutException:
+    #         print("❌ TimeoutException: Element not found within the wait time.")
+    #     except NoSuchElementException:
+    #         print("❌ NoSuchElementException: Element not found on the page.")
+    #     except Exception as e:
+    #         print("❌ Error during job search:", e)
+
+
+
+    # def close_popups(self):
+    #     """Close any blocking popups or overlays"""
+    #     wait = WebDriverWait(self.browser, 5)
+    #     try:
+    #         overlay = wait.until(
+    #             EC.presence_of_element_located((By.CLASS_NAME, "modal_ModalOverlay__DXtn2"))
+    #         )
+    #         if overlay:
+    #             print("⚠️ Popup detected! Closing it...")
+    #             self.browser.execute_script("arguments[0].click();", overlay)
+    #             time.sleep(2)  # Wait to ensure it's fully closed
+    #     except:
+    #         print("✅ No popups detected.")
+
+    # def click_easy_apply_filter(self):
+    #     """Click 'Easy Apply Only' filter"""
+    #     wait = WebDriverWait(self.browser, 15)
+    #     self.close_popups()  # Close popups before clicking
+
+    #     try:
+    #         easy_apply_filter = wait.until(
+    #             EC.element_to_be_clickable((By.XPATH, "//button[@data-test='applicationType']"))
+    #         )
+    #         self.browser.execute_script("arguments[0].scrollIntoView();", easy_apply_filter)
+    #         time.sleep(1)
+
+    #         try:
+    #             easy_apply_filter.click()
+    #         except:
+    #             print("⚠️ Normal click failed. Trying JavaScript click.")
+    #             self.browser.execute_script("arguments[0].click();", easy_apply_filter)
+
+    #         print("✅ 'Easy Apply Only' filter clicked successfully.")
+    #         time.sleep(2)
+
+    #         print('----------------------------------------------------------------')
+
+    #     except Exception as e:
+    #         print(f"❌ Error clicking 'Easy Apply Only' filter: {e}")
+
+    # def select_first_job(self):
+    #     """Click the first job listing"""
+    #     wait = WebDriverWait(self.browser, 15)
+    #     self.close_popups()  # Close popups before clicking
+
+    #     try:
+    #         job_listings = wait.until(
+    #             EC.presence_of_all_elements_located((By.CLASS_NAME, "JobCard_trackingLink__HMyun"))
+    #         )
+
+    #         if not job_listings:
+    #             print("❌ No job listings found.")
+    #             return False
+
+    #         first_job = job_listings[0]
+    #         self.browser.execute_script("arguments[0].scrollIntoView();", first_job)
+    #         time.sleep(1)
+
+    #         try:
+    #             first_job.click()
+    #         except:
+    #             print("⚠️ Normal click failed. Trying JavaScript click.")
+    #             self.browser.execute_script("arguments[0].click();", first_job)
+
+    #         print("✅ Clicked on the first job listing.")
+    #         time.sleep(3)
+    #         return True
+
+    #     except Exception as e:
+    #         print(f"❌ Error selecting job: {e}")
+    #         return False
+
+    # def easy_apply_job(self):
+    #     """Click 'Easy Apply' button on the job listing"""
+    #     wait = WebDriverWait(self.browser, 15)
+    #     self.close_popups()  # Close popups before clicking
+
+    #     try:
+    #         easy_apply_button = wait.until(
+    #             EC.element_to_be_clickable((By.XPATH, "//button[@data-test='easyApply']"))
+    #         )
+    #         self.browser.execute_script("arguments[0].scrollIntoView();", easy_apply_button)
+    #         time.sleep(1)
+
+    #         try:
+    #             easy_apply_button.click()
+    #         except:
+    #             print("⚠️ Normal click failed. Trying JavaScript click.")
+    #             self.browser.execute_script("arguments[0].click();", easy_apply_button)
+
+    #         print("✅ 'Easy Apply' button clicked successfully.")
+    #         time.sleep(2)
+
+    #     except Exception as e:
+    #         print(f"❌ Error clicking 'Easy Apply' button: {e}")
+
+    # def apply_to_jobs(self):
+    #     """Run the full Easy Apply process"""
+    #     print("🚀 Starting job application process...")
+
+    #     # Step 1: Search for jobs
+    #     self.search_job()
+
+    #     # Step 2: Apply Easy Apply filter
+    #     self.click_easy_apply_filter()
+
+    #     # Step 3: Click the first job listing
+    #     job_selected = self.select_first_job()
+
+    #     if job_selected:
+    #         # Step 4: Click 'Easy Apply'
+    #         self.easy_apply_job()
+
+    #     print("✅ Job application process completed.")
+
+    def close_popups(self):
+        """Close any blocking popups or overlays"""
+        wait = WebDriverWait(self.browser, 5)
+
+        popup_classes = [
+            "modal_ModalOverlay__DXtn2",  # Main modal overlay
+            "overlay_class_1",  # Replace with other known popup classes
+            "overlay_class_2"
+        ]
+
+        for popup_class in popup_classes:
+            try:
+                popups = self.browser.find_elements(By.CLASS_NAME, popup_class)
+                for popup in popups:
+                    print(f"⚠️ Popup detected ({popup_class})! Closing it...")
+                    self.browser.execute_script("arguments[0].click();", popup)
+                    time.sleep(2)
+            except:
+                pass
+
+        print("✅ No popups detected.")
+
+    def retry_click(self, element, max_attempts=3):
+        """Try clicking an element multiple times before giving up"""
+        for attempt in range(max_attempts):
+            try:
+                element.click()
+                return True  # Click successful
+            except Exception as e:
+                print(f"⚠️ Attempt {attempt+1} failed. Retrying...")
+                time.sleep(1)  # Short delay before retrying
+        return False  # Click failed after retries
+
     def search_job(self):
         wait = WebDriverWait(self.browser, 20)
         try:
             # Step 1: Click on the "Jobs" button
-            jobs_button = wait.until(EC.element_to_be_clickable(
-                (By.XPATH, "//a[@href='/Job/index.htm']")))
+            jobs_button = wait.until(EC.element_to_be_clickable((By.XPATH, "//a[@href='/Job/index.htm']")))
             jobs_button.click()
             print("✅ Clicked on 'Jobs' button.")
             time.sleep(3)  # Allow time for navigation
 
             # Step 2: Locate and enter job title
-            job_input_field = wait.until(EC.presence_of_element_located(
-                (By.XPATH, "//input[@placeholder='Find your perfect job']")))
-            job_input_field.click()
-            print("✅ 'Find your perfect job' input field clicked.")
+            job_input_field = wait.until(EC.presence_of_element_located((By.XPATH, "//input[@placeholder='Find your perfect job']")))
+            self.browser.execute_script("arguments[0].scrollIntoView();", job_input_field)
+            time.sleep(1)
+
+            # Try using ActionChains for clicking
+            actions = ActionChains(self.browser)
+            actions.move_to_element(job_input_field).click().perform()
+
             job_input_field.send_keys("Software Engineer")
             print("✅ Job title entered: 'Software Engineer'.")
             time.sleep(2)
@@ -255,253 +449,107 @@ class GlassDoorEasyApply:
         except Exception as e:
             print("❌ Error during job search:", e)
 
-    # def click_easy_apply(self):
-    #     """Click on the 'Easy Apply Only' button"""
-    #     wait = WebDriverWait(self.browser, 15)  # ✅ Define 'wait' here
-    #     try:
-    #         # Locate the "Easy Apply Only" button
-    #         easy_apply_button = WebDriverWait(self.browser, 15).until(
-    #             EC.element_to_be_clickable((By.XPATH, "//button[@data-test='applicationType']"))
-    #         )
-
-    #         # Scroll into view
-    #         self.browser.execute_script("arguments[0].scrollIntoView();", easy_apply_button)
-    #         time.sleep(1)
-
-    #         # Click the button using JavaScript
-    #         self.browser.execute_script("arguments[0].click();", easy_apply_button)
-    #         time.sleep(1)
-
-    #         # Verify if it was clicked (check "aria-pressed" attribute)
-    #         is_pressed = easy_apply_button.get_attribute("aria-pressed")
-    #         if is_pressed == "true":
-    #             print("✅ 'Easy Apply Only' button clicked successfully.")
-    #         else:
-    #             print("⚠️ 'Easy Apply Only' button might not have been clicked.")
-
-    # # Step 1: Locate the "Easy Apply Only" button
-    #         easy_apply_only_button = wait.until(
-    #             EC.element_to_be_clickable((By.XPATH, "//button[@data-test='applicationType']"))
-    #         )
-
-    #         # Scroll into view
-    #         self.browser.execute_script("arguments[0].scrollIntoView();", easy_apply_only_button)
-    #         time.sleep(1)
-
-    #         # Click the button using JavaScript
-    #         self.browser.execute_script("arguments[0].click();", easy_apply_only_button)
-    #         time.sleep(1)
-
-    #         # Verify if it was clicked
-    #         is_pressed = easy_apply_only_button.get_attribute("aria-pressed")
-    #         if is_pressed == "true":
-    #             print("✅ 'Easy Apply Only' button clicked successfully.")
-    #         else:
-    #             print("⚠️ 'Easy Apply Only' button might not have been clicked.")
-
-    #         # Step 2: Locate and click the first job listing
-    #         job_listings = wait.until(EC.presence_of_all_elements_located(
-    #             (By.CLASS_NAME, "JobCard_trackingLink__HMyun")  # Update class name if needed
-    #         ))
-
-    #         if job_listings:
-    #             first_job = job_listings[0]
-    #             self.browser.execute_script("arguments[0].scrollIntoView();", first_job)
-    #             time.sleep(2)  # Allow page to adjust
-    #             first_job.click()
-    #             print("✅ Clicked on the first job listing.")
-    #             time.sleep(3)  # Wait for job details to load
-    #         else:
-    #             print("❌ No job listings found. Exiting.")
-    #             return
-
-    #         # Step 3: Click "Easy Apply" button
-    #         easy_apply_button = wait.until(EC.element_to_be_clickable(
-    #             (By.XPATH, "//button[@data-test='easyApply']")
-    #         ))
-
-    #         # Scroll into view and click
-    #         self.browser.execute_script("arguments[0].scrollIntoView();", easy_apply_button)
-    #         time.sleep(2)
-    #         self.browser.execute_script("arguments[0].click();", easy_apply_button)
-
-    #         print("✅ 'Easy Apply' button clicked.")
-
-    #     except TimeoutException:
-    #         print("❌ TimeoutException: Element not found within the wait time.")
-    #     except NoSuchElementException:
-    #         print("❌ NoSuchElementException: Element not found on the page.")
-    #     except Exception as e:
-    #         print("❌ Error:", e)
-
-    # def click_easy_apply(self):
-    #     """Click on the 'Easy Apply Only' button"""
-    #     wait = WebDriverWait(self.browser, 15)
-
-    #     try:
-    #         # Locate the "Easy Apply Only" button
-    #         easy_apply_button = wait.until(
-    #             EC.presence_of_element_located((By.XPATH, "//button[@data-test='applicationType']"))
-    #         )
-
-    #         # Scroll into view
-    #         self.browser.execute_script("arguments[0].scrollIntoView();", easy_apply_button)
-    #         time.sleep(1)
-
-    #         # Check if it's visible before clicking
-    #         if easy_apply_button.is_displayed() and easy_apply_button.is_enabled():
-    #             easy_apply_button.click()
-    #             print("✅ 'Easy Apply Only' button clicked successfully.")
-    #         else:
-    #             print("⚠️ Button is not visible. Attempting JavaScript click.")
-    #             self.browser.execute_script("arguments[0].click();", easy_apply_button)
-
-    #           # Step 2: Click on the first job listing
-    #         job_listings = wait.until(EC.presence_of_all_elements_located(
-    #             (By.CLASS_NAME, "JobCard_trackingLink__HMyun")  # Update class name if needed
-    #         ))
-
-    #         if job_listings:
-    #             first_job = job_listings[0]
-    #             self.browser.execute_script("arguments[0].scrollIntoView();", first_job)
-    #             time.sleep(1)
-    #             first_job.click()
-    #             print("✅ Clicked on the first job listing.")
-    #             time.sleep(3)  # Wait for job details to load
-    #         else:
-    #             print("❌ No job listings found. Exiting.")
-    #             return
-
-    #         # Step 3: Click 'Easy Apply' button
-    #         easy_apply_button = wait.until(EC.element_to_be_clickable(
-    #             (By.XPATH, "//button[@data-test='easyApply']")
-    #         ))
-
-    #         self.browser.execute_script("arguments[0].scrollIntoView();", easy_apply_button)
-    #         time.sleep(1)
-    #         easy_apply_button.click()
-    #         print("✅ 'Easy Apply' button clicked.")
-
-    #         time.sleep(2)  # Let the page load the application form
-
-    #     except Exception as e:
-    #         print(f"❌ Error: {str(e)}")
-
-
-    # def click_easy_apply(self):
-        """Click 'Easy Apply Only' filter and apply for the job"""
-        wait = WebDriverWait(self.browser, 15)
-
-        try:
-            # Step 1: Click 'Easy Apply Only' filter
-            easy_apply_filter = wait.until(
-                EC.element_to_be_clickable((By.XPATH, "//button[@data-test='applicationType']"))
-            )
-            self.browser.execute_script("arguments[0].scrollIntoView();", easy_apply_filter)
-            time.sleep(1)
-            easy_apply_filter.click()
-            print("✅ 'Easy Apply Only' filter clicked successfully.")
-            time.sleep(2)
-
-             # Step 1: Click on the first job listing
-            job_listings = wait.until(EC.presence_of_all_elements_located(
-                (By.CLASS_NAME, "JobCard_trackingLink__HMyun")  # Update class name if needed
-            ))
-
-            if job_listings:
-                first_job = job_listings[0]
-                self.browser.execute_script("arguments[0].scrollIntoView();", first_job)
-                time.sleep(1)
-                first_job.click()
-                print("✅ Clicked on the first job listing.")
-                time.sleep(3)  # Wait for job details to load
-            else:
-                print("❌ No job listings found. Exiting.")
-                return
-
-            # Step 2: Click 'Easy Apply' button
-            easy_apply_button = wait.until(
-                EC.element_to_be_clickable((By.XPATH, "//button[@data-test='easyApply']"))
-            )
-
-            # Ensure button is interactable
-            self.browser.execute_script("arguments[0].scrollIntoView();", easy_apply_button)
-            time.sleep(1)
-
-            if easy_apply_button.is_displayed() and easy_apply_button.is_enabled():
-                easy_apply_button.click()
-                print("✅ 'Easy Apply' button clicked successfully.")
-            else:
-                print("⚠️ Button not directly interactable. Attempting JavaScript click.")
-                self.browser.execute_script("arguments[0].click();", easy_apply_button)
-
-            time.sleep(2)  # Allow application form to load
-
-        except Exception as e:
-            print(f"❌ Error: {str(e)}")
-
     def click_easy_apply_filter(self):
         """Click 'Easy Apply Only' filter"""
         wait = WebDriverWait(self.browser, 15)
+        self.close_popups()  # Close popups before clicking
+
         try:
-            easy_apply_filter = wait.until(
-                EC.element_to_be_clickable((By.XPATH, "//button[@data-test='applicationType']"))
-            )
+            easy_apply_filter = wait.until(EC.element_to_be_clickable((By.XPATH, "//button[@data-test='applicationType']")))
             self.browser.execute_script("arguments[0].scrollIntoView();", easy_apply_filter)
             time.sleep(1)
-            easy_apply_filter.click()
+
+            if not self.retry_click(easy_apply_filter):
+                print("❌ Failed to click 'Easy Apply Only' filter after retries.")
+
             print("✅ 'Easy Apply Only' filter clicked successfully.")
             time.sleep(2)
+
+            print('----------------------------------------------------------------')
 
         except Exception as e:
             print(f"❌ Error clicking 'Easy Apply Only' filter: {e}")
 
+    # def select_first_job(self):
+    #     """Click the first job listing"""
+    #     wait = WebDriverWait(self.browser, 15)
+    #     self.close_popups()  # Close popups before clicking
+
+    #     try:
+    #         job_listings = wait.until(EC.presence_of_all_elements_located((By.CLASS_NAME, "JobCard_trackingLink__HMyun")))
+
+    #         if not job_listings:
+    #             print("❌ No job listings found.")
+    #             return False
+
+    #         first_job = job_listings[0]
+    #         self.browser.execute_script("arguments[0].scrollIntoView();", first_job)
+    #         time.sleep(1)
+
+    #         if not self.retry_click(first_job):
+    #             print("❌ Failed to click the first job listing after retries.")
+    #             return False
+
+    #         print("✅ Clicked on the first job listing.")
+    #         time.sleep(3)
+    #         return True
+
+    #     except Exception as e:
+    #         print(f"❌ Error selecting job: {e}")
+    #         return False
+
     def select_first_job(self):
-        """Click the first job listing"""
+        """Click the first job listing with retries"""
         wait = WebDriverWait(self.browser, 15)
-        try:
-            job_listings = wait.until(EC.presence_of_all_elements_located(
-                (By.CLASS_NAME, "JobCard_trackingLink__HMyun")
-            ))
+        self.close_popups()  # Close popups before clicking
 
-            if not job_listings:
-                print("❌ No job listings found.")
-                return False
+        max_retries = 3
+        for attempt in range(max_retries):
+            try:
+                job_listings = wait.until(
+                    EC.presence_of_all_elements_located((By.CLASS_NAME, "JobCard_trackingLink__HMyun"))
+                )
 
-            first_job = job_listings[0]
-            self.browser.execute_script("arguments[0].scrollIntoView();", first_job)
-            time.sleep(1)
-            first_job.click()
-            print("✅ Clicked on the first job listing.")
-            time.sleep(3)
-            return True
+                if not job_listings:
+                    print("❌ No job listings found.")
+                    return False
 
-        except Exception as e:
-            print(f"❌ Error selecting job: {e}")
-            return False
+                first_job = job_listings[0]
+                self.browser.execute_script("arguments[0].scrollIntoView();", first_job)
+                time.sleep(1)
+
+                try:
+                    first_job.click()
+                except:
+                    print("⚠️ Normal click failed. Trying JavaScript click.")
+                    self.browser.execute_script("arguments[0].click();", first_job)
+
+                print("✅ Clicked on the first job listing.")
+                time.sleep(3)
+                return True  # Success, exit function
+
+            except Exception as e:
+                print(f"⚠️ Attempt {attempt + 1} failed. Retrying... ({e})")
+                time.sleep(2)  # Wait before retrying
+
+        print("❌ Failed to click the first job listing after retries.")
+        return False  # Return False if all retries fail
+
 
     def easy_apply_job(self):
         """Click 'Easy Apply' button on the job listing"""
         wait = WebDriverWait(self.browser, 15)
+        self.close_popups()  # Close popups before clicking
+
         try:
-            easy_apply_button = wait.until(
-                EC.presence_of_element_located((By.XPATH, "//button[@data-test='easyApply']"))
-            )
+            easy_apply_button = wait.until(EC.element_to_be_clickable((By.XPATH, "//button[@data-test='easyApply']")))
             self.browser.execute_script("arguments[0].scrollIntoView();", easy_apply_button)
             time.sleep(1)
 
-            if easy_apply_button.is_displayed() and easy_apply_button.is_enabled():
-                try:
-                    easy_apply_button.click()
-                    print("✅ 'Easy Apply' button clicked successfully.")
-                except:
-                    print("⚠️ Normal click failed. Trying JavaScript click.")
-                    self.browser.execute_script("arguments[0].click();", easy_apply_button)
-            else:
-                print("⚠️ Button not interactable. Using ActionChains.")
-                actions = ActionChains(self.browser)
-                actions.move_to_element(easy_apply_button).click().perform()
+            if not self.retry_click(easy_apply_button):
+                print("❌ Failed to click 'Easy Apply' button after retries.")
 
+            print("✅ 'Easy Apply' button clicked successfully.")
             time.sleep(2)
 
         except Exception as e:
@@ -513,7 +561,7 @@ class GlassDoorEasyApply:
 
         # Step 1: Search for jobs
         self.search_job()
-        
+
         # Step 2: Apply Easy Apply filter
         self.click_easy_apply_filter()
 
@@ -523,7 +571,7 @@ class GlassDoorEasyApply:
         if job_selected:
             # Step 4: Click 'Easy Apply'
             self.easy_apply_job()
-
+        time.sleep(5)
         print("✅ Job application process completed.")
 
     def security_check(self):
