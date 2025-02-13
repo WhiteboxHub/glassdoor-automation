@@ -264,41 +264,62 @@ def validate_yaml():
     return parameters
 
 
+
+
 # if __name__ == '__main__':
-#     parameters = validate_yaml()
-#     browser = init_browser()
-#     bot = GlassDoorEasyApply(parameters, browser)
-    
-#     print("Start")
-#     # print(dir(bot))
-#     bot.login()
-#     time.sleep(3)  # Ensure the page loads
-#     bot.search_job()
-#     time.sleep(3)  # Ensure the page loads
-#     bot.click_easy_apply_filter()
-#     time.sleep(3)  # Ensure the page loads
-#     bot.select_first_job()
-#     time.sleep(3)  # Ensure the page loads
-#     bot.easy_apply_job()
-#     time.sleep(3)  # Ensure the page loads
-#     bot.apply_to_jobs()
+#     try:
+#         # ✅ Load YAML parameters & Initialize browser
+#         parameters = validate_yaml()
+#         browser = init_browser()
+#         bot = GlassDoorEasyApply(parameters, browser)
 
-#     print("End")
+#         print("🚀 Start")
+#         bot.login()
+#         time.sleep(3)  # Ensure the page loads
 
+#         # ✅ Search and filter jobs
+#         bot.search_job()
+#         time.sleep(3)
+#         bot.click_easy_apply_filter()
+#         time.sleep(3)
 
+#         # ✅ Select and apply for jobs
+#         bot.select_first_job()
+#         time.sleep(3)
+#         bot.easy_apply_job()
+#         time.sleep(3)
+
+        
+#         bot.select_resume_and_continue()
+#         bot.enter_mobile_number("1234567890")
+#         bot.select_yes_no_options()
+
+#         # ✅ Continue with the job application process
+#         bot.apply_to_jobs()
+
+#         print("✅ End")
+
+#     except Exception as e:
+#         print(f"❌ Error: {e}")
+
+#     finally:
+#         print("🛑 Closing browser...")
+#         browser.quit()
 
 if __name__ == '__main__':
     try:
+        # ✅ Load YAML parameters & Initialize browser
         parameters = validate_yaml()
         browser = init_browser()
         bot = GlassDoorEasyApply(parameters, browser)
-        
+
         print("🚀 Start")
         bot.login()
         time.sleep(3)  # Ensure the page loads
 
-        bot.apply_to_jobs()  # Single call handles everything
-        
+        # ✅ Run the full job application process (handles everything internally)
+        bot.apply_to_jobs()
+
         print("✅ End")
 
     except Exception as e:

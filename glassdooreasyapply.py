@@ -1,115 +1,3 @@
-# import time, random, csv, pyautogui, pdb, traceback, sys
-# from selenium.common.exceptions import TimeoutException
-# from selenium.webdriver.common.keys import Keys
-# from selenium.webdriver.common.by import By
-# # i added below two lines 
-# from selenium.webdriver.support.ui import WebDriverWait
-# from selenium.webdriver.support import expected_conditions as EC
-# from selenium.webdriver.support.ui import Select
-# from selenium.webdriver.common.action_chains import ActionChains
-# from datetime import date
-# from itertools import product
-
-
-# class GlassDoorEasyApply:
-#     def __init__(self, parameters, driver):
-#         self.browser = driver
-#         self.email = parameters['email']
-#         self.password = parameters['password']
-#         self.disable_lock = parameters['disableAntiLock']
-#         self.company_blacklist = parameters.get('companyBlacklist', []) or []
-#         self.title_blacklist = parameters.get('titleBlacklist', []) or []
-#         self.positions = parameters.get('positions', [])
-#         self.locations = parameters.get('locations', [])
-#         self.base_search_url = self.get_base_search_url(parameters)
-#         self.seen_jobs = []
-#         self.file_name = "output"
-#         self.output_file_directory = parameters['outputFileDirectory']
-#         self.resume_dir = parameters['uploads']['resume']
-#         self.photo_dir = parameters['uploads']['photo']
-#         if 'coverLetter' in parameters['uploads']:
-#             self.cover_letter_dir = parameters['uploads'].get['coverLetter']
-#         else:
-#             self.cover_letter_dir = ''
-#         self.checkboxes = parameters.get('checkboxes', [])
-#         self.university_gpa = parameters['universityGpa']
-#         self.languages = parameters.get('languages', [])
-#         self.industry = parameters.get('industry', [])
-#         self.technology = parameters.get('technology', [])
-#         self.personal_info = parameters.get('personalInfo', [])
-#         self.eeo = parameters.get('eeo', [])
-#         self.technology_default = self.technology['default']
-#         self.industry_default = self.industry['default'] 
-
-
-#     # def login(self):
-#     #     try: 
-            
-#     #         self.browser.get("https://www.glassdoor.com/index.htm")
-#     #         time.sleep(random.uniform(1, 5))
-#     #         # self.browser.find_element(By.CSS_SELECTOR,'#SiteNav > nav > div.d-none.d-md-block.LockedHomeHeaderStyles__bottomBorder > div > div > div > button').click()
-#     #         self.browser.find_element(By.CSS_SELECTOR, 'button[data-test="site-header-sign-in"]').click()
-#     #         self.browser.find_element_by_id("modalUserEmail").send_keys(self.email)
-#     #         self.browser.find_element_by_id("modalUserPassword").send_keys(self.password)
-#     #         # self.browser.find_element(By.CSS_SELECTOR,"#LoginModal > div > div > div.modal_main.actionBarMt0 > div.fullContent > div.modal_content > div > div > form > div.d-flex.align-items-center.flex-column > button > span").click()
-#     #         self.browser.find_element(By.CSS_SELECTOR, 'button[data-test="sign-in-submit"]').click()
-#     #         time.sleep(random.uniform(1, 5))
-#     #     except TimeoutException:
-#     #         raise Exception("Could not login!")
-        
-
-#     # def security_check(self):
-#     #     current_url = self.browser.current_url
-#     #     page_source = self.browser.page_source
-
-#     #     if '/checkpoint/challenge/' in current_url or 'security check' in page_source:
-#     #         input("Please complete the security check and press enter in this console when it is done.")
-#     #         time.sleep(random.uniform(5.5, 10.5))
-
-
-#     def login(self):
-#         wait = WebDriverWait(self.browser, 20)  # Increased wait time for loading elements
-#         try: 
-#             self.browser.get("https://www.glassdoor.com/index.htm")  # Open Glassdoor homepage
-#             time.sleep(random.uniform(2, 5))  # Random delay to avoid detection
-
-#             # Step 1: Click the login button
-#             login_button = wait.until(EC.element_to_be_clickable((By.XPATH, "//button[@aria-label='sign in']")))
-#             login_button.click()
-#             print("Login button clicked.")
-
-#             # Step 2: Fill in the email
-#             email_input = wait.until(EC.presence_of_element_located((By.ID, "modalUserEmail")))
-#             email_input.send_keys(self.email)
-#             print("Email entered.")
-
-#             # Step 3: Click "Continue with email" button using JavaScript
-#             wait = WebDriverWait(driver, 10)  # Adjust timeout as needed
-#             continue_button = wait.until(EC.element_to_be_clickable(
-#             (By.CSS_SELECTOR, "#InlineLoginModule > div > div.view-container.inlineInnerContainer.mx-auto.my-0 > div > div > div > div > form > div.emailButton > div > button")
-#           ))
-#             driver.execute_script("arguments[0].scrollIntoView();", continue_button)
-#             ActionChains(driver).move_to_element(continue_button).click().perform()
-#             print("Clicked 'Continue with Email' button successfully.")
-
-#             time.sleep(random.uniform(2, 4))  # Wait for the next page or form to load
-
-#             # Step 4: Fill in the password
-#             password_input = wait.until(EC.presence_of_element_located((By.ID, "modalUserPassword")))
-#             password_input.send_keys(self.password)
-#             print("Password entered.")
-
-#             # Optionally, you can click a submit button here if there's one for password
-#             # submit_button = wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, 'button[data-test="sign-in-submit"]')))
-#             # submit_button.click()
-#             # print("Password submitted.")
-
-#             time.sleep(random.uniform(3, 6))  # Wait for login to complete
-
-#         except Exception as e:
-#             print("Error during login:", e)
-
-
 import time
 import random
 from selenium import webdriver
@@ -215,163 +103,6 @@ class GlassDoorEasyApply:
         except Exception as e:
             print("❌ Error during login:", e)
 
-   
-    # def search_job(self):
-    #     wait = WebDriverWait(self.browser, 20)
-    #     try:
-    #         # Step 1: Click on the "Jobs" button
-    #         jobs_button = wait.until(EC.element_to_be_clickable(
-    #             (By.XPATH, "//a[@href='/Job/index.htm']")))
-    #         jobs_button.click()
-    #         print("✅ Clicked on 'Jobs' button.")
-    #         time.sleep(3)  # Allow time for navigation
-
-    #         # Step 2: Locate and enter job title
-    #         job_input_field = wait.until(EC.presence_of_element_located(
-    #             (By.XPATH, "//input[@placeholder='Find your perfect job']")))
-    #         job_input_field.click()
-    #         print("✅ 'Find your perfect job' input field clicked.")
-    #         job_input_field.send_keys("Software Engineer")
-    #         print("✅ Job title entered: 'Software Engineer'.")
-    #         time.sleep(2)
-
-    #         # Step 3: Enter location and press Enter
-    #         location_input = wait.until(EC.element_to_be_clickable((By.ID, "searchBar-location")))
-    #         location_input.click()
-    #         time.sleep(1)
-    #         location_input.send_keys("New York")
-    #         time.sleep(1)
-    #         location_input.send_keys(Keys.RETURN)  # Press Enter to update results
-    #         time.sleep(3)  # Wait for the page to update
-
-    #         # Step 4: Re-locate the location input to avoid stale reference error
-    #         location_input = wait.until(EC.presence_of_element_located((By.ID, "searchBar-location")))
-    #         entered_location = location_input.get_attribute("value")
-    #         print(f"✅ Location confirmed: {entered_location}")
-
-    #     except TimeoutException:
-    #         print("❌ TimeoutException: Element not found within the wait time.")
-    #     except NoSuchElementException:
-    #         print("❌ NoSuchElementException: Element not found on the page.")
-    #     except Exception as e:
-    #         print("❌ Error during job search:", e)
-
-
-
-    # def close_popups(self):
-    #     """Close any blocking popups or overlays"""
-    #     wait = WebDriverWait(self.browser, 5)
-    #     try:
-    #         overlay = wait.until(
-    #             EC.presence_of_element_located((By.CLASS_NAME, "modal_ModalOverlay__DXtn2"))
-    #         )
-    #         if overlay:
-    #             print("⚠️ Popup detected! Closing it...")
-    #             self.browser.execute_script("arguments[0].click();", overlay)
-    #             time.sleep(2)  # Wait to ensure it's fully closed
-    #     except:
-    #         print("✅ No popups detected.")
-
-    # def click_easy_apply_filter(self):
-    #     """Click 'Easy Apply Only' filter"""
-    #     wait = WebDriverWait(self.browser, 15)
-    #     self.close_popups()  # Close popups before clicking
-
-    #     try:
-    #         easy_apply_filter = wait.until(
-    #             EC.element_to_be_clickable((By.XPATH, "//button[@data-test='applicationType']"))
-    #         )
-    #         self.browser.execute_script("arguments[0].scrollIntoView();", easy_apply_filter)
-    #         time.sleep(1)
-
-    #         try:
-    #             easy_apply_filter.click()
-    #         except:
-    #             print("⚠️ Normal click failed. Trying JavaScript click.")
-    #             self.browser.execute_script("arguments[0].click();", easy_apply_filter)
-
-    #         print("✅ 'Easy Apply Only' filter clicked successfully.")
-    #         time.sleep(2)
-
-    #         print('----------------------------------------------------------------')
-
-    #     except Exception as e:
-    #         print(f"❌ Error clicking 'Easy Apply Only' filter: {e}")
-
-    # def select_first_job(self):
-    #     """Click the first job listing"""
-    #     wait = WebDriverWait(self.browser, 15)
-    #     self.close_popups()  # Close popups before clicking
-
-    #     try:
-    #         job_listings = wait.until(
-    #             EC.presence_of_all_elements_located((By.CLASS_NAME, "JobCard_trackingLink__HMyun"))
-    #         )
-
-    #         if not job_listings:
-    #             print("❌ No job listings found.")
-    #             return False
-
-    #         first_job = job_listings[0]
-    #         self.browser.execute_script("arguments[0].scrollIntoView();", first_job)
-    #         time.sleep(1)
-
-    #         try:
-    #             first_job.click()
-    #         except:
-    #             print("⚠️ Normal click failed. Trying JavaScript click.")
-    #             self.browser.execute_script("arguments[0].click();", first_job)
-
-    #         print("✅ Clicked on the first job listing.")
-    #         time.sleep(3)
-    #         return True
-
-    #     except Exception as e:
-    #         print(f"❌ Error selecting job: {e}")
-    #         return False
-
-    # def easy_apply_job(self):
-    #     """Click 'Easy Apply' button on the job listing"""
-    #     wait = WebDriverWait(self.browser, 15)
-    #     self.close_popups()  # Close popups before clicking
-
-    #     try:
-    #         easy_apply_button = wait.until(
-    #             EC.element_to_be_clickable((By.XPATH, "//button[@data-test='easyApply']"))
-    #         )
-    #         self.browser.execute_script("arguments[0].scrollIntoView();", easy_apply_button)
-    #         time.sleep(1)
-
-    #         try:
-    #             easy_apply_button.click()
-    #         except:
-    #             print("⚠️ Normal click failed. Trying JavaScript click.")
-    #             self.browser.execute_script("arguments[0].click();", easy_apply_button)
-
-    #         print("✅ 'Easy Apply' button clicked successfully.")
-    #         time.sleep(2)
-
-    #     except Exception as e:
-    #         print(f"❌ Error clicking 'Easy Apply' button: {e}")
-
-    # def apply_to_jobs(self):
-    #     """Run the full Easy Apply process"""
-    #     print("🚀 Starting job application process...")
-
-    #     # Step 1: Search for jobs
-    #     self.search_job()
-
-    #     # Step 2: Apply Easy Apply filter
-    #     self.click_easy_apply_filter()
-
-    #     # Step 3: Click the first job listing
-    #     job_selected = self.select_first_job()
-
-    #     if job_selected:
-    #         # Step 4: Click 'Easy Apply'
-    #         self.easy_apply_job()
-
-    #     print("✅ Job application process completed.")
 
     def close_popups(self):
         """Close any blocking popups or overlays"""
@@ -470,33 +201,7 @@ class GlassDoorEasyApply:
         except Exception as e:
             print(f"❌ Error clicking 'Easy Apply Only' filter: {e}")
 
-    # def select_first_job(self):
-    #     """Click the first job listing"""
-    #     wait = WebDriverWait(self.browser, 15)
-    #     self.close_popups()  # Close popups before clicking
-
-    #     try:
-    #         job_listings = wait.until(EC.presence_of_all_elements_located((By.CLASS_NAME, "JobCard_trackingLink__HMyun")))
-
-    #         if not job_listings:
-    #             print("❌ No job listings found.")
-    #             return False
-
-    #         first_job = job_listings[0]
-    #         self.browser.execute_script("arguments[0].scrollIntoView();", first_job)
-    #         time.sleep(1)
-
-    #         if not self.retry_click(first_job):
-    #             print("❌ Failed to click the first job listing after retries.")
-    #             return False
-
-    #         print("✅ Clicked on the first job listing.")
-    #         time.sleep(3)
-    #         return True
-
-    #     except Exception as e:
-    #         print(f"❌ Error selecting job: {e}")
-    #         return False
+    
 
     def select_first_job(self):
         """Click the first job listing with retries"""
@@ -571,8 +276,159 @@ class GlassDoorEasyApply:
         if job_selected:
             # Step 4: Click 'Easy Apply'
             self.easy_apply_job()
-        time.sleep(5)
+        time.sleep(10)
         print("✅ Job application process completed.")
+
+
+    
+
+    def select_resume_and_continue(self):
+        """Select the uploaded resume and proceed to the next step."""
+        try:
+            print("✅ Waiting for the resume selection page...")
+
+            wait = WebDriverWait(self.browser, 15)
+
+            # ✅ Wait for resume selection to load
+            resume_radio_xpath = "//input[@type='radio' and @name='resumeType']"
+            wait.until(EC.presence_of_element_located((By.XPATH, resume_radio_xpath)))
+            print("✅ Resume selection page detected.")
+
+            # ✅ Check if resume is already selected
+            resume_radio_button = self.browser.find_element(By.XPATH, resume_radio_xpath)
+            if not resume_radio_button.is_selected():
+                print("⚠️ Resume not selected, selecting it now...")
+                resume_label_xpath = "//label[contains(@data-testid, 'FileResumeCard-label')]"
+                resume_label = wait.until(EC.element_to_be_clickable((By.XPATH, resume_label_xpath)))
+
+                # Scroll to resume and click
+                self.browser.execute_script("arguments[0].scrollIntoView();", resume_label)
+                time.sleep(1)
+                resume_label.click()
+                print("✅ Resume selected.")
+
+            time.sleep(5)  # Ensure selection is processed
+
+            # ✅ Click the SVG button (checkmark)
+            try:
+                print("✅ Waiting for SVG button (checkmark)...")
+                svg_button_xpath = "//svg[contains(@class, 'css-s92xw2')]"
+                svg_button = wait.until(EC.element_to_be_clickable((By.XPATH, svg_button_xpath)))
+
+                # Scroll into view
+                self.browser.execute_script("arguments[0].scrollIntoView();", svg_button)
+                time.sleep(1)
+
+                try:
+                    svg_button.click()
+                    print("✅ SVG button clicked successfully.")
+                except:
+                    print("⚠️ Normal click failed. Trying JavaScript click...")
+                    self.browser.execute_script("arguments[0].click();", svg_button)
+
+            except TimeoutException:
+                print("❌ TimeoutException: SVG button not found.")
+            except Exception as e:
+                print(f"❌ Error clicking SVG button: {e}")
+
+            time.sleep(5)  # Ensure SVG click is processed
+
+            # ✅ Click "Continue" button
+            continue_button_xpath = "//button[contains(text(), 'Continue')]"
+            continue_button = wait.until(EC.element_to_be_clickable((By.XPATH, continue_button_xpath)))
+
+            try:
+                continue_button.click()
+                print("✅ Clicked 'Continue' after selecting resume and clicking SVG.")
+            except:
+                print("⚠️ Normal click failed. Trying JavaScript click...")
+                self.browser.execute_script("arguments[0].click();", continue_button)
+
+            time.sleep(3)
+
+        except TimeoutException:
+            print("❌ TimeoutException: Resume selection page did not load in time.")
+        except Exception as e:
+            print(f"❌ Error selecting resume: {e}")
+
+
+    
+
+    def enter_mobile_number(self, mobile_number):
+        """Enter mobile number after clicking 'Continue'."""
+        try:
+            print("🚀 Entering mobile number...")
+
+            mobile_input_xpath = "//input[@type='tel']"
+
+            # Wait for the mobile input field
+            mobile_input = WebDriverWait(self.browser, 10).until(
+                EC.presence_of_element_located((By.XPATH, mobile_input_xpath))
+            )
+
+            # Click the input field to activate it
+            self.browser.execute_script("arguments[0].scrollIntoView();", mobile_input)
+            mobile_input.click()
+            time.sleep(1)
+
+            # Enter mobile number
+            mobile_input.clear()
+            mobile_input.send_keys(mobile_number)
+            print(f"✅ Mobile number entered: {mobile_number}")
+
+            # ✅ Click "Continue" button
+            continue_button_xpath = "//button[contains(text(), 'Continue')]"
+            continue_button = WebDriverWait(self.browser, 10).until(
+                EC.element_to_be_clickable((By.XPATH, continue_button_xpath))
+            )
+            try:
+                continue_button.click()
+            except Exception:
+                print("⚠️ Normal click failed. Trying JavaScript click...")
+                self.browser.execute_script("arguments[0].click();", continue_button)
+
+            print("✅ Clicked on 'Continue' after entering mobile number.")
+
+        except Exception as e:
+            print(f"❌ Failed to enter mobile number: {e}")
+
+    def select_yes_no_options(self):
+        """Automatically select 'Yes' or 'No' options."""
+        try:
+            print("🚀 Selecting 'Yes' or 'No' options...")
+
+            yes_no_buttons_xpath = "//button[contains(text(), 'Yes') or contains(text(), 'No')]"
+
+            # Wait for the Yes/No buttons
+            yes_no_buttons = WebDriverWait(self.browser, 10).until(
+                EC.presence_of_all_elements_located((By.XPATH, yes_no_buttons_xpath))
+            )
+
+            for button in yes_no_buttons:
+                self.browser.execute_script("arguments[0].scrollIntoView();", button)
+                time.sleep(1)
+                self.browser.execute_script("arguments[0].click();", button)  # JS Click
+                print(f"✅ Clicked on '{button.text}' button.")
+
+            # ✅ Click "Continue" button after selecting options
+            continue_button_xpath = "//button[contains(text(), 'Continue')]"
+            continue_button = WebDriverWait(self.browser, 10).until(
+                EC.element_to_be_clickable((By.XPATH, continue_button_xpath))
+            )
+            try:
+                continue_button.click()
+            except Exception:
+                print("⚠️ Normal click failed. Trying JavaScript click...")
+                self.browser.execute_script("arguments[0].click();", continue_button)
+
+            print("✅ Clicked on 'Continue' after selecting options.")
+
+        except Exception as e:
+            print(f"❌ Failed to select 'Yes' or 'No' options: {e}")
+
+
+            
+
 
     def security_check(self):
         """Handles potential CAPTCHA or additional verification steps"""
